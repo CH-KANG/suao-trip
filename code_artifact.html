@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11/7-11/8 南港⇄蘇澳羅東 兩天一夜雙泉看海之旅</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        sunny: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        },
+                        ocean: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        rainy: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        /* Smooth theme transitions */
+        .theme-transition {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Custom Timeline Line */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 23px;
+            width: 3px;
+            background: linear-gradient(to bottom, #0ea5e9, #38bdf8, #94a3b8);
+            border-radius: 999px;
+        }
+        @media (min-width: 768px) {
+            .timeline-line::before {
+                left: 31px;
+            }
+        }
+        /* Rain animation effect when in rainy mode */
+        .rain-bg {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Hide scrollbar for clean horizontal tabs */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body id="app-body" class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Sticky Top Navbar -->
+    <header id="navbar" class="sticky top-0 z-40 backdrop-blur-md bg-white/85 border-b border-slate-200/80 shadow-sm theme-transition">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
+            <!-- Brand Title -->
+            <div class="flex items-center gap-2.5">
+                <div id="brand-icon" class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-teal-500 flex items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-compass text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-800 text-sm sm:text-base leading-tight">南港 ⇄ 蘇澳羅東</h1>
+                    <p class="text-[11px] text-slate-500 font-medium">11/07 (六) - 11/08 (日) 兩天一夜</p>
+                </div>
+            </div>
+
+            <!-- Weather Mode Global Switch + Share Tools -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Weather Switch Pill -->
+                <div class="bg-slate-100 p-1 rounded-full flex items-center border border-slate-200 shadow-inner" role="group" aria-label="天氣模式切換">
+                    <button id="btn-mode-sunny" onclick="setWeatherMode('sunny')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 bg-amber-400 text-slate-900 shadow-sm">
+                        <i class="fa-solid fa-sun text-amber-900"></i>
+                        <span>晴天方案</span>
+                    </button>
+                    <button id="btn-mode-rainy" onclick="setWeatherMode('rainy')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-umbrella"></i>
+                        <span>雨天備案</span>
+                    </button>
+                </div>
+
+                <!-- Share / GitHub Guide Button -->
+                <button onclick="openModal('share-modal')" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-medium flex items-center gap-1.5 shadow-sm transition" title="分享行程與GitHub教學">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span class="hidden sm:inline">分享 / 部署</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section id="hero-banner" class="relative overflow-hidden bg-gradient-to-br from-sky-600 via-teal-600 to-emerald-600 text-white py-10 sm:py-14 px-4 theme-transition">
+        <div class="rain-bg absolute inset-0 pointer-events-none opacity-40"></div>
+        <!-- Decorative SVG Waves -->
+        <svg class="absolute bottom-0 left-0 w-full h-12 sm:h-16 text-slate-50 fill-current pointer-events-none" viewBox="0 0 1440 100" preserveAspectRatio="none">
+            <path d="M0,40 C320,100 420,0 740,50 C1060,100 1200,20 1440,60 L1440,100 L0,100 Z"></path>
+        </svg>
+
+        <div class="max-w-5xl mx-auto relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div class="space-y-3 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs sm:text-sm font-semibold">
+                    <span id="hero-weather-badge">☀️ 目前顯示：晴天標準行程（可隨時切換雨備）</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-black tracking-tight leading-snug">
+                    蘇澳冷熱雙泉・南方澳海鮮與內埤海灣之旅
+                </h2>
+                <p id="hero-subtitle" class="text-sky-100 text-sm sm:text-base leading-relaxed">
+                    搭火車輕鬆出發，騎乘活力 125 漫遊南方澳漁港，入住煙波四季雙泉館享受黃金雙湯與豐盛早午餐至 13:30，晴雨皆有完美備案！
+                </p>
+
+                <!-- Quick Trip Metrics -->
+                <div class="pt-2 flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm">
+                    <div class="bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2">
+                        <i class="fa-solid fa-train-subway text-amber-300"></i>
+                        <span>去程：南港➔羅東 (11:04-12:12)</span>
+                    </div>
+                    <div class="bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2">
+                        <i class="fa-solid fa-motorcycle text-amber-300"></i>
+                        <span>當地：威力租車 (活力-125)</span>
+                    </div>
+                    <div class="bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2">
+                        <i class="fa-solid fa-bus text-amber-300"></i>
+                        <span>回程：國光客運 1879D 返南港</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Weather Status Card -->
+            <div class="bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl p-4 sm:p-5 md:w-72 shrink-0 shadow-lg">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs uppercase tracking-wider text-white/80 font-semibold">行程智能模式</span>
+                    <span id="weather-card-icon" class="text-2xl">🌤️</span>
+                </div>
+                <p id="weather-card-desc" class="text-xs sm:text-sm text-white/95 leading-relaxed mb-3">
+                    東北季風期間蘇澳偶有陣雨。點擊右上角或下方按鈕，戶外步道與海灘將自動切換為「室內場館」與「海景咖啡廳」！
+                </p>
+                <button onclick="toggleWeatherMode()" class="w-full py-2 px-3 rounded-xl bg-white text-slate-900 hover:bg-amber-50 font-bold text-xs sm:text-sm shadow transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span id="weather-card-btn-text">一鍵切換為「雨天備案」</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 space-y-6">
+
+        <!-- Navigation Filter Tabs -->
+        <div class="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar pb-1 border-b border-slate-200">
+            <div class="flex items-center gap-2">
+                <button onclick="switchTab('all')" id="tab-all" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap bg-sky-600 text-white shadow-sm">
+                    <i class="fa-regular fa-calendar-days mr-1.5"></i>全部行程
+                </button>
+                <button onclick="switchTab('day1')" id="tab-day1" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200">
+                    Day 1・11/7 (六) 海鮮與雙泉
+                </button>
+                <button onclick="switchTab('day2')" id="tab-day2" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200">
+                    Day 2・11/8 (日) 飯店早午餐與看海
+                </button>
+                <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-list-check text-emerald-600"></i>
+                    <span>行前裝備 & 必吃清單</span>
+                    <span id="checklist-badge" class="px-1.5 py-0.5 text-[10px] rounded-full bg-emerald-100 text-emerald-800 font-bold">0/12</span>
+                </button>
+            </div>
+
+            <button onclick="copyItineraryText()" class="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold transition shrink-0">
+                <i class="fa-brands fa-line text-base"></i>
+                <span>複製文字傳 LINE 群組</span>
+            </button>
+        </div>
+
+        <!-- ================= DAY 1 SECTION ================= -->
+        <section id="section-day1" class="space-y-6">
+            <!-- Day 1 Header Banner -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex flex-col items-center justify-center font-black shrink-0">
+                        <span class="text-[10px] uppercase tracking-wider">DAY</span>
+                        <span class="text-xl leading-none">01</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg sm:text-xl font-black text-slate-800">11月7日（週六）</h3>
+                            <span class="text-xs px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 font-semibold border border-sky-200">羅東 ➔ 南方澳 ➔ 蘇澳 ➔ 羅東夜市</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                            重點：羅東後站取車 ➔ 春成活海鮮 ➔ 步道散步/室內雨備 ➔ 煙波四季雙泉館泡湯 ➔ 羅東夜市
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-xs font-medium text-slate-500 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
+                    <i class="fa-solid fa-route text-sky-600"></i>
+                    <span>羅東 ⇄ 蘇澳單程機車約 25~30 分鐘</span>
+                </div>
+            </div>
+
+            <!-- Day 1 Timeline -->
+            <div class="relative timeline-line space-y-6 pl-2 sm:pl-4">
+
+                <!-- 11:04 - 12:12 Train -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-sky-600 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-train"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700 font-bold text-xs sm:text-sm">11:04 - 12:12</span>
+                            <span class="text-xs font-medium text-slate-400">交通移動・約 1 小時 8 分</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">台鐵火車：南港車站 ➔ 羅東車站</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            11:04 從南港火車站發車，12:12 抵達羅東火車站。到站後請往<strong>「後站（傳藝路／羅東轉運站方向）」</strong>出站，步行即可抵達租車行。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=羅東火車站" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 羅東車站地圖
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12:12 - 12:30 Scooter Rental -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-motorcycle"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 font-bold text-xs sm:text-sm">12:12 - 12:30</span>
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">已預訂車款：活力-125</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">威力租車（羅東後站店）取車出發</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            羅東後站出來即達，辦理取車手續。取車後沿著<strong>台9線（冬山路➔蘇澳中山路）</strong>騎往南方澳漁港，車程約 25～30 分鐘。
+                        </p>
+                        <!-- Weather Tip Box -->
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm flex items-start gap-2.5 mb-3">
+                            <i class="fa-solid fa-circle-info text-sky-600 mt-0.5"></i>
+                            <div>
+                                <strong class="text-slate-800">騎車與雨備提醒：</strong>
+                                <span class="text-slate-600">請務必攜帶<strong>普通重型機車駕照</strong>。若當天飄雨或陰天，取車時記得向車行索取／確認車廂備妥雨衣（強烈建議自備兩件式雨衣與手機防水袋）。</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=羅東威力租車" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 威力租車 Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13:00 - 14:10 Seafood Lunch -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-orange-50 text-orange-700 font-bold text-xs sm:text-sm">13:00 - 14:10</span>
+                            <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-shield-halved mr-1"></i>室內餐廳・晴雨皆宜</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">午餐：春成活海鮮餐廳（南方澳漁港）</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            南方澳在地高人氣海產店，食材新鮮、價格透明且上菜速度非常快！營業時間為 11:00–19:00，對面即有漁港空地可停放機車。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=蘇澳春成活海鮮" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 春成活海鮮 Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14:15 - 15:15 Afternoon Dynamic Slot (Sunny vs Rainy) -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div id="slot1-icon" class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50 theme-transition">
+                        <i class="fa-solid fa-person-hiking"></i>
+                    </div>
+                    <div id="slot1-card" class="bg-white rounded-2xl p-4 sm:p-5 border-2 border-amber-300 shadow-md theme-transition">
+                        <!-- Slot Header & Local Switch -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 font-bold text-xs sm:text-sm">14:15 - 15:15</span>
+                                <span class="text-xs font-bold text-slate-500">餐後散步時段（可切換晴/雨方案）</span>
+                            </div>
+                            <!-- Local Switch -->
+                            <div class="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs font-bold">
+                                <button onclick="setSlotMode('slot1', 'sunny')" id="slot1-btn-sunny" class="px-2.5 py-1 rounded-md bg-amber-400 text-slate-900 shadow-sm transition">
+                                    ☀️ 晴天爬步道
+                                </button>
+                                <button onclick="setSlotMode('slot1', 'rainy')" id="slot1-btn-rainy" class="px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">
+                                    ☔ 雨天逛室內 (4選1)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- SUNNY CONTENT: Qixingling Trail -->
+                        <div id="slot1-sunny-content" class="space-y-3">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 mb-1">☀️ 晴天首選方案</span>
+                                    <h4 class="text-base sm:text-lg font-bold text-slate-800">蘇澳七星嶺步道（七星山健康步道）</h4>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                步道入口就在<strong>蘇澳冷泉公園／煙波大飯店旁</strong>，從南方澳騎車過來約 8 分鐘。沿途依高度設有「一星觀泉、二星觀澳、三星觀山、四星觀樹、五星觀港、六星觀海」觀景台。
+                            </p>
+                            <div class="p-3 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs sm:text-sm text-amber-900 space-y-1">
+                                <div class="font-bold flex items-center gap-1.5">
+                                    <i class="fa-solid fa-clock"></i> 時間控制小撇步（銜接 15:15 入住飯店）：
+                                </div>
+                                <p>因為全長階梯較多，若想在 15:00～15:30 準時進煙波泡湯，建議散步至<strong>「一星觀泉」或「二星觀澳」</strong>俯瞰蘇澳市景後原路折返（來回約 45 分鐘）；若體力充沛想攻頂「六星觀海」，可微調至 15:40 再辦理入住。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 pt-1">
+                                <a href="https://www.google.com/maps/search/?api=1&query=蘇澳七星嶺步道" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                    <i class="fa-solid fa-location-dot text-rose-500"></i> 七星嶺步道入口導航
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- RAINY CONTENT: 4 Indoor Backups -->
+                        <div id="slot1-rainy-content" class="hidden space-y-3">
+                            <div>
+                                <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 mb-1">☔ 雨天室內備案（山區石階濕滑，建議改逛以下室內場館 4 選 1）</span>
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800">南方澳 & 蘇澳室內觀光館／伴手禮中心</h4>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Option 1 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">1. 祝大漁物產館</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">離餐廳僅2分鐘</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">就在南方澳大橋旁！吃完春成海鮮不必淋雨騎遠，直接進館看3D海底彩繪隧道、珊瑚貝殼館與選購魚鬆罐頭伴手禮。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=祝大漁物產館" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                                <!-- Option 2 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">2. 奇麗灣珍奶文化館</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold">免門票參觀</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">全室內綠建築珍奶工廠（營業至17:00），可認識珍奶歷史、喝燈泡珍奶下午茶或報名手搖珍奶 DIY。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=奇麗灣珍奶文化館" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                                <!-- Option 3 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">3. 蜡藝蜡筆城堡</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold">手作體驗</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">超吸睛巨型蠟筆建築（營業至17:30），全室內體驗親手做彩色筆與造型蠟筆，還有8層樓高室內彩虹溜滑梯。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=蜡藝蜡筆城堡" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                                <!-- Option 4 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">4. 安永心食館</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">AR科技互動</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">結合海洋科技互動遊戲與健康飲食的現代化室內場館，空間挑高明亮，非常適合躲雨拍照。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=安永心食館" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15:15 - 18:00 Lakeshore Hotel Check-in & Hot Spring -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-hot-tub-person"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 font-bold text-xs sm:text-sm">15:15 - 18:00</span>
+                            <span class="text-xs font-medium text-rose-600 bg-rose-50 px-2.5 py-0.5 rounded-full">★ 住宿亮點・冷熱雙泉</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">煙波大飯店蘇澳四季雙泉館（Check-in 泡湯休息）</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            辦理入住後，先在客房內享受專屬的<strong>黃金雙湯（熱泉）與蘇澳鐵質冷泉</strong>雙池泡湯，或帶泳衣前往頂樓<strong>「川原天幕」</strong>體驗無邊際泳池與景觀溫泉池，俯瞰蘇澳港船隻進出，徹底洗去疲勞，休息至 18:00。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=煙波大飯店蘇澳四季雙泉館" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 煙波四季雙泉館導航
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 18:00 - 21:00 Luodong Night Market -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-xs sm:text-sm">18:00 - 21:00</span>
+                            <span class="text-xs font-medium text-slate-500">晚餐美食巡禮</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">羅東觀光夜市（人氣小吃攻略）</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            18:00 從飯店出發前往羅東夜市（騎車約 25 分鐘）。以下整理 4 間人氣必吃名店，點擊即可開啟地圖：
+                        </p>
+
+                        <!-- Night Market Food Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3">
+                            <a href="https://www.google.com/maps/search/?api=1&query=羅東夜市羊舖子創始店" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200 transition flex items-center justify-between group">
+                                <div>
+                                    <div class="font-bold text-xs sm:text-sm text-slate-800 group-hover:text-indigo-700">🍲 羊舖子當歸羊肉湯</div>
+                                    <div class="text-[11px] text-slate-500">甘甜當歸湯頭＋外酥內嫩臭豆腐（有遮雨座位）</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-indigo-600"></i>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=阿灶伯當歸羊肉湯" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200 transition flex items-center justify-between group">
+                                <div>
+                                    <div class="font-bold text-xs sm:text-sm text-slate-800 group-hover:text-indigo-700">🔥 阿灶伯當歸羊肉湯</div>
+                                    <div class="text-[11px] text-slate-500">夜市排隊指標名店，外帶排隊動線較快</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-indigo-600"></i>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=羅東夜市煎餅果子" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200 transition flex items-center justify-between group">
+                                <div>
+                                    <div class="font-bold text-xs sm:text-sm text-slate-800 group-hover:text-indigo-700">🥞 民權路煎餅果子</div>
+                                    <div class="text-[11px] text-slate-500">現做酥脆薄脆配料豐富，適合兩人分食</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-indigo-600"></i>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=赤炸風雲12盎司雞排" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200 transition flex items-center justify-between group">
+                                <div>
+                                    <div class="font-bold text-xs sm:text-sm text-slate-800 group-hover:text-indigo-700">🍗 赤炸風雲-12盎司雞排</div>
+                                    <div class="text-[11px] text-slate-500">比臉還大的巨無霸多汁雞排，買回飯店配飲料超讚</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-indigo-600"></i>
+                            </a>
+                        </div>
+
+                        <!-- Rainy Night Backup Box -->
+                        <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-200/80 text-xs sm:text-sm flex items-start gap-2.5">
+                            <i class="fa-solid fa-cloud-showers-heavy text-indigo-600 mt-0.5"></i>
+                            <div>
+                                <strong class="text-indigo-950">☔ 晚間大雨交通備案（免騎夜路淋雨）：</strong>
+                                <span class="text-indigo-900">若 18:00 外頭下起大雨不想騎車 10 公里去羅東，從煙波飯店步行 6 分鐘即可到<strong>「蘇澳火車站」</strong>搭台鐵區間車（或騎去蘇澳新站轉乘）至<strong>「羅東站」</strong>，火車車程僅 12~15 分鐘，前站出站直走 8 分鐘即達夜市！</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= DAY 2 SECTION ================= -->
+        <section id="section-day2" class="space-y-6 pt-4">
+            <!-- Day 2 Header Banner -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-700 flex flex-col items-center justify-center font-black shrink-0">
+                        <span class="text-[10px] uppercase tracking-wider">DAY</span>
+                        <span class="text-xl leading-none">02</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg sm:text-xl font-black text-slate-800">11月8日（週日）</h3>
+                            <span class="text-xs px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-700 font-semibold border border-teal-200">煙波飯店早午餐 ➔ 內埤海灘 ➔ 羅東轉運站返南港</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                            重點：11:00 退房 ➔ 煙波飯店早午餐享用到 13:30 ➔ 內埤海灘/海景咖啡廳 ➔ 羅東還車搭 1879D
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-xs font-medium text-teal-700 bg-teal-50 px-3 py-2 rounded-xl border border-teal-100">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span>已更新：退房後直接吃飯店早午餐至 13:30</span>
+                </div>
+            </div>
+
+            <!-- Day 2 Timeline -->
+            <div class="relative timeline-line space-y-6 pl-2 sm:pl-4">
+
+                <!-- Morning - 11:00 Check-out & 11:00 - 13:30 Hotel Brunch -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-champagne-glasses"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border-2 border-emerald-200 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 font-bold text-xs sm:text-sm">11:00 退房 ➔ 13:30</span>
+                                <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">★ 飯店早午餐饗宴</span>
+                            </div>
+                            <span class="text-xs font-medium text-emerald-600"><i class="fa-solid fa-shield-halved mr-1"></i>全室內・完全不受天氣影響</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">煙波大飯店蘇澳四季雙泉館：退房 & 悠閒早午餐（朝晴庭）</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            早上可睡到自然醒並再泡一次晨間溫泉，<strong>11:00 辦理退房手續</strong>（若有大件背包可先寄放一樓櫃檯）。接著直接在飯店餐廳<strong>「朝晴庭」</strong>悠閒享用豐盛的煙波早堂／早午餐至 <strong>13:00～13:30</strong>！
+                        </p>
+                        <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/70 text-xs sm:text-sm text-emerald-950">
+                            <strong>✨ 行程優勢：</strong>不必急著大清早起床退房找餐廳，直接在飯店內吹冷氣／暖氣品嚐結合宜蘭山海食材的特色料理，吃飽喝足休息到 13:30 再騎車去內埤海灘看海！
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13:45 - 15:00 Neipi Beach / Seaview Cafe (Dynamic Sunny vs Rainy) -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div id="slot2-icon" class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-sky-500 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50 theme-transition">
+                        <i class="fa-solid fa-water"></i>
+                    </div>
+                    <div id="slot2-card" class="bg-white rounded-2xl p-4 sm:p-5 border-2 border-sky-300 shadow-md theme-transition">
+                        <!-- Slot Header & Local Switch -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800 font-bold text-xs sm:text-sm">13:45 - 15:00</span>
+                                <span class="text-xs font-bold text-slate-500">午後看海時光（車程約 10 分鐘）</span>
+                            </div>
+                            <!-- Local Switch -->
+                            <div class="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs font-bold">
+                                <button onclick="setSlotMode('slot2', 'sunny')" id="slot2-btn-sunny" class="px-2.5 py-1 rounded-md bg-amber-400 text-slate-900 shadow-sm transition">
+                                    ☀️ 晴天海灘漫步
+                                </button>
+                                <button onclick="setSlotMode('slot2', 'rainy')" id="slot2-btn-rainy" class="px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">
+                                    ☔ 雨天海景咖啡廳
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- SUNNY CONTENT: Neipi Beach Walk -->
+                        <div id="slot2-sunny-content" class="space-y-3">
+                            <div>
+                                <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 mb-1">☀️ 晴天看海方案</span>
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800">內埤海灘（情人灣／內埤海水浴場）踏浪散步</h4>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                從煙波飯店騎車過來約 10 分鐘。剛吃完豐盛的飯店早午餐，正好沿著優美的弧形海灣散步消化、拍美照、聽太平洋海浪拍打細砂礫石的聲音。如果走累了，岸邊也有一整排海景咖啡廳可以隨時坐下來喝杯冰飲。
+                            </p>
+                            <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs sm:text-sm text-rose-900 flex items-start gap-2">
+                                <i class="fa-solid fa-triangle-exclamation text-rose-600 mt-0.5"></i>
+                                <span><strong>安全提醒：</strong>內埤海灘屬於陡降型海溝地形，海浪暗流強勁，請在岸上散步觀海拍照即可，切勿下水游泳！</span>
+                            </div>
+                            <div class="flex flex-wrap gap-2 pt-1">
+                                <a href="https://www.google.com/maps/search/?api=1&query=內埤海灘" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                    <i class="fa-solid fa-location-dot text-rose-500"></i> 內埤海灘 Google Maps
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- RAINY CONTENT: Seaview Cafes -->
+                        <div id="slot2-rainy-content" class="hidden space-y-3">
+                            <div>
+                                <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 mb-1">☔ 雨天看海備案（剛吃完飯店早午餐，點杯咖啡在窗邊看海避雨最愜意！）</span>
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800">內埤海灘第一排「室內海景咖啡廳」精選</h4>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                即使下雨也能欣賞內埤海灘！因為 13:30 才剛在煙波吃完飽足的早午餐，推薦直接挑一間海景第一排咖啡廳入座，點杯手沖咖啡或茶飲，透過大片玻璃窗看海浪拍岸直到 15:00：
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Cafe 1 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">☕ 笑ㄟCafé 蘇澳店</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold">視野最開闊</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">位於內埤海灘北側高處，擁有超遼闊太平洋海景視野與美式工業風室內空間（營業 11:00–19:00）。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=笑ㄟCafe蘇澳店" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                                <!-- Cafe 2 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">🏛️ 地中海CASA</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-bold">二三樓景觀窗</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">藍白希臘風地標建築，二、三樓室內靠窗座位能將整片情人灣盡收眼底（營業 10:30–18:30）。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=蘇澳地中海CASA" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                                <!-- Cafe 3 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">🌊 We Cafe 我們的海灣咖啡</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 font-bold">手沖咖啡好評</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">造船路海景第一排，環境溫馨安靜，手沖咖啡與鬆餅評價極高（營業 11:30–19:00）。</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=We+Cafe我們的海灣咖啡" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                                <!-- Cafe 4 -->
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="font-bold text-sm text-slate-800">🔱 海洋20M / 海神咖啡屋</span>
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">正對海浪</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-2">距離海灘僅20公尺，一整排緊鄰的異國風海景咖啡館，哪間有靠窗位就進哪間！</p>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=海洋20M海景咖啡館" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-map-pin"></i> 開啟地圖導航
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15:00 - 15:40 Return Scooter -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-gas-pump"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 font-bold text-xs sm:text-sm">15:00 - 15:40</span>
+                            <span class="text-xs font-medium text-slate-400">車程約 25~30 分鐘</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">騎車返回羅東後站、加油 & 威力租車還車</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            15:00 左右從內埤海灘出發返回羅東，進羅東市區或後站傳藝路時順路把機車油箱加滿，再到<strong>威力租車</strong>完成還車手續。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=羅東威力租車" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 導航回羅東威力租車
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15:45 ~ Kuo-Kuang Bus 1879D back to Nangang -->
+                <div class="relative pl-10 sm:pl-14">
+                    <div class="absolute left-2.5 sm:left-4 top-4 w-7 h-7 rounded-full bg-sky-700 text-white flex items-center justify-center text-xs shadow ring-4 ring-slate-50">
+                        <i class="fa-solid fa-bus"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800 font-bold text-xs sm:text-sm">15:45 ~ 賦歸</span>
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800">班距：15~30 分鐘一班</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-1">羅東轉運站 ➔ 國光客運 1879D ➔ 南港轉運站</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                            從威力租車步行 3 分鐘即達<strong>羅東轉運站新站大樓</strong>（全室內冷氣候車大廳，內有超商與洗手間，下雨等車也不淋濕）。搭乘<strong>國光客運 1879 / 1879D（往圓山／經南港）</strong>返回南港轉運站，下車即可連通捷運板南線返家！
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=羅東轉運站" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 羅東轉運站地圖
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=南港轉運站" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                <i class="fa-solid fa-flag-checkered text-sky-600"></i> 南港轉運站地圖
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= CHECKLIST SECTION ================= -->
+        <section id="section-checklist" class="space-y-4 pt-4">
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-black text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check text-emerald-600"></i>
+                            <span>行前準備 & 美食勾選清單</span>
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                            勾選進度會自動儲存在您的手機／電腦瀏覽器中，方便出發前逐一核對！
+                        </p>
+                    </div>
+                    <button onclick="resetChecklist()" class="self-start sm:self-auto text-xs font-semibold text-slate-400 hover:text-rose-600 transition flex items-center gap-1">
+                        <i class="fa-solid fa-rotate-left"></i> 重置所有勾選
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                    <!-- Column 1: Essential Gear & Rain Prep -->
+                    <div class="space-y-2.5">
+                        <h4 class="font-bold text-sm text-slate-700 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                            <i class="fa-solid fa-suitcase-rolling text-sky-600"></i> 必備證件、泡湯與雨天裝備
+                        </h4>
+                        <div id="checklist-gear" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Column 2: Food & Experience Goals -->
+                    <div class="space-y-2.5">
+                        <h4 class="font-bold text-sm text-slate-700 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                            <i class="fa-solid fa-utensils text-orange-500"></i> 必吃美食與行程體驗打卡
+                        </h4>
+                        <div id="checklist-food" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 px-4 text-center text-xs text-slate-500">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>🌊 11/7 - 11/8 南港⇄蘇澳羅東 兩天一夜旅遊指南（支援 GitHub Pages 靜態託管）</p>
+            <div class="flex items-center gap-3">
+                <button onclick="copyItineraryText()" class="text-sky-600 hover:underline font-semibold flex items-center gap-1">
+                    <i class="fa-regular fa-copy"></i> 複製文字版行程
+                </button>
+                <span>・</span>
+                <button onclick="openModal('share-modal')" class="text-slate-700 hover:underline font-semibold flex items-center gap-1">
+                    <i class="fa-brands fa-github"></i> 如何放到 GitHub Pages？
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-2.5 text-xs sm:text-sm font-medium">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toast-msg">已複製到剪貼簿！</span>
+    </div>
+
+    <!-- Share & GitHub Pages Guide Modal -->
+    <div id="share-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 space-y-4 animate-fade-in">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                    <i class="fa-brands fa-github text-xl"></i>
+                    <span>分享行程 & GitHub Pages 上傳教學</span>
+                </h3>
+                <button onclick="closeModal('share-modal')" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p class="font-medium text-slate-800">這份網頁已經打包為單一獨立的 <code class="px-1.5 py-0.5 rounded bg-slate-100 text-rose-600 font-mono">index.html</code> 檔案，只要 3 步驟就能免費發布到 GitHub 讓旅伴用手機瀏覽：</p>
+                
+                <ol class="list-decimal list-inside space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                    <li>在 GitHub 建立一個公開的 Repository（例如命名為 <code class="text-sky-700 font-mono">suao-trip</code>）。</li>
+                    <li>將此程式碼儲存為 <code class="text-rose-600 font-mono font-bold">index.html</code> 並上傳（Upload files）至該專案根目錄。</li>
+                    <li>進入專案的 <strong>Settings ➔ Pages</strong>，在 Branch 選擇 <code class="font-mono">main</code> 並按 Save，約 1 分鐘後就會產生專屬網址（如 <code class="text-emerald-700 font-mono">https://你的帳號.github.io/suao-trip/</code>）！</li>
+                </ol>
+
+                <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
+                    <button onclick="copyItineraryText()" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center gap-2 shadow-sm transition">
+                        <i class="fa-brands fa-line text-lg"></i>
+                        <span>一鍵複製 LINE 群組文字摘要</span>
+                    </button>
+                    <button onclick="closeModal('share-modal')" class="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition">
+                        關閉視窗
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // --- State ---
+        let currentWeatherMode = 'sunny'; // 'sunny' | 'rainy'
+
+        const checklistData = {
+            gear: [
+                { id: 'g1', text: '普通重型機車駕照（威力租車取車必備！）' },
+                { id: 'g2', text: '身分證 & 健保卡（飯店入住與租車核對）' },
+                { id: 'g3', text: '泳衣、泳帽（煙波頂樓「川原天幕」無邊際泳池與湯池必備）' },
+                { id: 'g4', text: '兩件式雨衣 / 摺疊傘 / 防水鞋套（蘇澳騎車防雨必備）' },
+                { id: 'g5', text: '手機防水袋 & 行動電源（機車導航耗電快）' },
+                { id: 'g6', text: '悠遊卡 / 一卡通（搭台鐵區間車或國光客運 1879D 刷卡）' }
+            ],
+            food: [
+                { id: 'f1', text: '南方澳「春成活海鮮」現撈海產午餐' },
+                { id: 'f2', text: '煙波大飯店房內「黃金雙泉＋冷泉」泡湯體驗' },
+                { id: 'f3', text: '羅東夜市：羊舖子 / 阿灶伯當歸羊肉湯＆臭豆腐' },
+                { id: 'f4', text: '羅東夜市：民權路煎餅果子 & 赤炸風雲 12 盎司雞排' },
+                { id: 'f5', text: 'Day 2 煙波飯店豐盛早午餐（11:00 退房後悠閒吃到 13:30）' },
+                { id: 'f6', text: '內埤海灘看海 & 羅東後站買伴手禮（奕順軒/諾貝爾奶凍）' }
+            ]
+        };
+
+        // --- Weather Mode Switching ---
+        function setWeatherMode(mode) {
+            currentWeatherMode = mode;
+            const btnSunny = document.getElementById('btn-mode-sunny');
+            const btnRainy = document.getElementById('btn-mode-rainy');
+            const heroBanner = document.getElementById('hero-banner');
+            const heroBadge = document.getElementById('hero-weather-badge');
+            const weatherCardIcon = document.getElementById('weather-card-icon');
+            const weatherCardBtnText = document.getElementById('weather-card-btn-text');
+
+            if (mode === 'sunny') {
+                // Global Toggle Buttons
+                btnSunny.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 bg-amber-400 text-slate-900 shadow-sm';
+                btnRainy.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 text-slate-600 hover:text-slate-900';
+                
+                // Hero Styling
+                heroBanner.className = 'relative overflow-hidden bg-gradient-to-br from-sky-600 via-teal-600 to-emerald-600 text-white py-10 sm:py-14 px-4 theme-transition';
+                heroBadge.innerHTML = '☀️ 目前顯示：晴天標準行程（可隨時切換雨備）';
+                weatherCardIcon.textContent = '🌤️';
+                weatherCardBtnText.textContent = '一鍵切換為「雨天備案」';
+
+                // Switch both slots to sunny
+                setSlotMode('slot1', 'sunny', false);
+                setSlotMode('slot2', 'sunny', false);
+                showToast('☀️ 已切換為「晴天標準行程」！');
+            } else {
+                // Global Toggle Buttons
+                btnRainy.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 bg-sky-600 text-white shadow-sm';
+                btnSunny.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 text-slate-600 hover:text-slate-900';
+
+                // Hero Styling
+                heroBanner.className = 'relative overflow-hidden bg-gradient-to-br from-slate-800 via-sky-900 to-slate-900 text-white py-10 sm:py-14 px-4 theme-transition';
+                heroBadge.innerHTML = '☔ 目前顯示：雨天室內＆海景咖啡廳備案';
+                weatherCardIcon.textContent = '🌧️';
+                weatherCardBtnText.textContent = '一鍵切回「晴天方案」';
+
+                // Switch both slots to rainy
+                setSlotMode('slot1', 'rainy', false);
+                setSlotMode('slot2', 'rainy', false);
+                showToast('☔ 已切換為「雨天備案」（室內場館＋海景咖啡廳）！');
+            }
+        }
+
+        function toggleWeatherMode() {
+            setWeatherMode(currentWeatherMode === 'sunny' ? 'rainy' : 'sunny');
+        }
+
+        // Individual Slot Toggle (Slot 1: Qixingling vs Indoor, Slot 2: Neipi Beach vs Cafes)
+        function setSlotMode(slotId, mode, notify = true) {
+            const sunnyContent = document.getElementById(`${slotId}-sunny-content`);
+            const rainyContent = document.getElementById(`${slotId}-rainy-content`);
+            const btnSunny = document.getElementById(`${slotId}-btn-sunny`);
+            const btnRainy = document.getElementById(`${slotId}-btn-rainy`);
+            const card = document.getElementById(`${slotId}-card`);
+
+            if (mode === 'sunny') {
+                sunnyContent.classList.remove('hidden');
+                rainyContent.classList.add('hidden');
+                btnSunny.className = 'px-2.5 py-1 rounded-md bg-amber-400 text-slate-900 shadow-sm transition';
+                btnRainy.className = 'px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 transition';
+                card.className = 'bg-white rounded-2xl p-4 sm:p-5 border-2 border-amber-300 shadow-md theme-transition';
+            } else {
+                sunnyContent.classList.add('hidden');
+                rainyContent.classList.remove('hidden');
+                btnRainy.className = 'px-2.5 py-1 rounded-md bg-sky-600 text-white shadow-sm transition';
+                btnSunny.className = 'px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 transition';
+                card.className = 'bg-white rounded-2xl p-4 sm:p-5 border-2 border-sky-400 shadow-md theme-transition';
+            }
+        }
+
+        // --- Tab Navigation ---
+        function switchTab(tab) {
+            const secDay1 = document.getElementById('section-day1');
+            const secDay2 = document.getElementById('section-day2');
+            const secCheck = document.getElementById('section-checklist');
+
+            const tabs = ['all', 'day1', 'day2', 'checklist'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tab) {
+                    btn.className = 'tab-btn px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap bg-sky-600 text-white shadow-sm flex items-center gap-1.5';
+                } else {
+                    btn.className = 'tab-btn px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 flex items-center gap-1.5';
+                }
+            });
+
+            if (tab === 'all') {
+                secDay1.classList.remove('hidden');
+                secDay2.classList.remove('hidden');
+                secCheck.classList.remove('hidden');
+            } else if (tab === 'day1') {
+                secDay1.classList.remove('hidden');
+                secDay2.classList.add('hidden');
+                secCheck.classList.add('hidden');
+            } else if (tab === 'day2') {
+                secDay1.classList.add('hidden');
+                secDay2.classList.remove('hidden');
+                secCheck.classList.add('hidden');
+            } else if (tab === 'checklist') {
+                secDay1.classList.add('hidden');
+                secDay2.classList.add('hidden');
+                secCheck.classList.remove('hidden');
+            }
+        }
+
+        // --- Checklist with LocalStorage ---
+        function getSavedChecks() {
+            try {
+                const raw = localStorage.getItem('suao_trip_checks_v1');
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveChecks(state) {
+            try {
+                localStorage.setItem('suao_trip_checks_v1', JSON.stringify(state));
+            } catch (e) {}
+        }
+
+        function renderChecklist() {
+            const saved = getSavedChecks();
+            const gearContainer = document.getElementById('checklist-gear');
+            const foodContainer = document.getElementById('checklist-food');
+
+            const buildItemHTML = (item) => {
+                const checked = !!saved[item.id];
+                return `
+                    <label class="flex items-start gap-3 p-3 rounded-xl border ${checked ? 'bg-emerald-50/60 border-emerald-200' : 'bg-slate-50 border-slate-200'} cursor-pointer hover:bg-slate-100/80 transition select-none">
+                        <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleCheckItem('${item.id}')" class="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-xs sm:text-sm ${checked ? 'line-through text-slate-400' : 'text-slate-700 font-medium'}">${item.text}</span>
+                    </label>
+                `;
+            };
+
+            gearContainer.innerHTML = checklistData.gear.map(buildItemHTML).join('');
+            foodContainer.innerHTML = checklistData.food.map(buildItemHTML).join('');
+
+            // Update counter badge
+            const total = checklistData.gear.length + checklistData.food.length;
+            const doneCount = Object.values(saved).filter(Boolean).length;
+            const badge = document.getElementById('checklist-badge');
+            if (badge) {
+                badge.textContent = `${doneCount}/${total}`;
+            }
+        }
+
+        function toggleCheckItem(id) {
+            const saved = getSavedChecks();
+            saved[id] = !saved[id];
+            saveChecks(saved);
+            renderChecklist();
+        }
+
+        function resetChecklist() {
+            saveChecks({});
+            renderChecklist();
+            showToast('已重置所有勾選項目');
+        }
+
+        // --- Copy LINE Summary ---
+        function copyItineraryText() {
+            const summary = `🌊【11/7-11/8 南港⇄蘇澳羅東 兩天一夜行程表】
+
+📅 Day 1：11/7 (六)
+• 11:04-12:12 台鐵火車：南港 ➔ 羅東（後站出站）
+• 12:12-12:30 羅東威力租車（取活力-125機車，往南方澳約25分）
+• 13:00-14:10 午餐：南方澳「春成活海鮮」
+• 14:15-15:15 午後行程：
+  ☀️晴天：蘇澳七星嶺步道散步（一星觀泉/二星觀澳）
+  ☔雨備：祝大漁物產館 / 奇麗灣珍奶館 / 蜡藝蜡筆城堡 / 安永心食館
+• 15:15-18:00 入住「蘇澳煙波大飯店 四季雙泉館」泡湯休息
+• 18:00-21:00 晚餐：羅東觀光夜市（羊舖子/阿灶伯/煎餅果子/赤炸風雲）
+  ※大雨備案：可從蘇澳站搭台鐵區間車至羅東站(15分)免騎夜路淋雨
+
+📅 Day 2：11/8 (日)
+• 11:00 辦理退房（行李可先寄櫃檯）
+• 11:00-13:30 煙波大飯店早午餐（在飯店內悠閒享用到13:30）
+• 13:45-15:00 內埤海灘（情人灣）午後看海：
+  ☀️晴天：海灘踏浪散步拍照（陡降海灘勿下水）
+  ☔雨備：海景第一排咖啡廳喝咖啡看海（笑ㄟCafé / 地中海CASA / We Cafe / 海洋20M）
+• 15:00-15:40 騎車返回羅東、加油＆威力租車還車
+• 15:45~ 羅東轉運站搭乘「國光客運 1879D」返回南港轉運站`;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = summary;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast('已複製 LINE 行程文字摘要！可直接貼上群組');
+            } catch (err) {
+                showToast('複製失敗，請手動選取複製');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // --- Modal & Toast Helpers ---
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-msg');
+            msgEl.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            renderChecklist();
+        };
+    </script>
+</body>
+</html>
